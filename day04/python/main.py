@@ -57,7 +57,6 @@ n_boards = len(boards)
 winning_boards = []
 for i,v in enumerate(drawn):
 
-    board_to_remove = []
     for j,b in enumerate(boards):
 
         # Part 2: skipping boards that have won already
