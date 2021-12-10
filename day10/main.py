@@ -1,41 +1,25 @@
 from collections import deque
-d = { ')': 0, '}': 0, ']': 0, '>' : 0 }
+close_d = { ')': 0, '}': 0, ']': 0, '>' : 0 }
+close_score = { ')': 1, '}': 3, ']': 2, '>' : 4 }
+map_c = { '(': ')', '{': '}', '[': ']', '<': '>' }
 
 scores = []
-for i, l in enumerate(open('input.txt')):
+for l in open('input.txt'):
     l = l.strip()
     expected_close = deque()
-    is_bad = False
     for c in l:
-        if c == '(':
-            expected_close.append(')')
-        elif c == '{':
-            expected_close.append('}')
-        elif c == '[':
-            expected_close.append(']')
-        elif c == '<':
-            expected_close.append('>')
-        elif c in d.keys() and c != expected_close.pop():
-            d[c] += 1
-            is_bad = True
+        if c in map_c.keys():
+            expected_close.append(map_c[c])
+        elif c in close_d.keys() and c != expected_close.pop():
+            close_d[c] += 1
             break
-    
-    if not is_bad:
+    else:
         score = 0
         for c in reversed(list(expected_close)):
-            add = 0
-            if c == ')':
-                add = 1
-            elif c == ']':
-                add = 2
-            elif c == '}':
-                add = 3
-            elif c == '>':
-                add = 4
-
-            score = score * 5 + add
+            score = score * 5 + close_score[c]
 
         scores.append(score)
 
-print(d[')']*3 + d[']']*57 + d['}']*1197 + d['>'] * 25137)
+print(close_d[')']*3 + close_d[']']*57 +
+      close_d['}']*1197 + close_d['>'] * 25137)
 print(sorted(scores)[len(scores) // 2])
