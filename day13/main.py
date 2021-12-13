@@ -1,8 +1,8 @@
 import numpy as np
+
 instr = [l.strip().split(' ')[-1].split('=') for l in open('input.txt') if '=' in l]
 arr = [list(map(int, l.strip().split(','))) for l in open('input.txt') if ',' in l]
-max_x = max(cell[0] for cell in arr)
-max_y = max(cell[1] for cell in arr)
+max_x, max_y = [max(cell[i] for cell in arr) for i in [0, 1]]
 
 base = np.full((max_y+1, max_x+1), False)
 for x,y in arr:
